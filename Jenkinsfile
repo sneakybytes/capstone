@@ -34,7 +34,7 @@ pipeline {
 		stage("Deploying on Kubernetes Cluser") {
 			steps {
 				echo "Creating Kubernetes cluster..."
-				sh "sudo minikube start --vm-driver=none"
+				sh "minikube start --vm-driver=none"
 				sh "kubectl get all"
 				sh "kubectl create -f ./kubernetes_config/k8s_deployment_config.yml"
 				sh "kubectl create -f ./kubernetes_config/k8s_service_config.yml"
