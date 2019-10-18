@@ -1,9 +1,9 @@
 pipeline {
     agent any
-	
+
 	environment {
 	    DOCKERHUBUSER = credentials('dockerid')
-		registry = 'sneakybytes/capstone'
+		registry = 'sneakybytes/capstone-httpd'
 	}
 	
 	stages {     
@@ -26,8 +26,9 @@ pipeline {
 		stage("Building Docker Image & Upload to Docker Hub") {
 			steps {
 				sh 'echo "Building Image..."'
-				sh "docker build -t ${registry} ."
+				sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
 				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
+				sh "docker push ${registry}:${env.BUILD_NUMBER}"
 			}
 		}
 	}
