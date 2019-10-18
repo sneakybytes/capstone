@@ -33,7 +33,8 @@ pipeline {
 		}
 		stage("Deploying on Kubernetes Cluser") {
 			steps {
-				sh 'echo "Creating Kubernetes cluster..."'
+				echo "Creating Kubernetes cluster..."
+				sh k8s_cluster.sh
 			}
 		}
 	}
