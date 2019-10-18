@@ -9,6 +9,12 @@ pipeline {
       				sh 'docker -v'
 			}
 	    	}
+		stage("Linting") {
+			steps { 
+				echo 'Linting...'
+      				sh '/bin/hadolint Dockerfile'
+			}
+		}
 	}
      
 }
