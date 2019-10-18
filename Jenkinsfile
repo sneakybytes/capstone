@@ -1,9 +1,10 @@
 pipeline {
     agent any
-	def registry = 'sneakybytes/capstone'
+	#def registry = 'sneakybytes/capstone'
 	
 	environment {
 	    DOCKERHUBUSER = credentials('dockerid')
+		registry = 'sneakybytes/capstone'
 	}
 	
 	stages {     
