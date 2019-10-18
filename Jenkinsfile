@@ -30,6 +30,11 @@ pipeline {
 				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
 				sh "docker push ${registry}"
 			}
+
+		stage("Deploying on Kubernetes Cluser") {
+			steps {
+				echo "Creating Kubernetes cluster..."
+			}
 		}
 	}
 }
