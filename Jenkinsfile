@@ -26,9 +26,9 @@ pipeline {
 		stage("Building Docker Image & Upload to Docker Hub") {
 			steps {
 				sh 'echo "Building Image..."'
-				sh "docker build -t ${registry}:${env.BUILD_NUMBER} ."
-				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
-				sh "docker push ${registry}:${env.BUILD_NUMBER}"
+				sh "docker build -t ${registry} ."
+				sh "docker login -u ${DOCKERHUBUSER_USR} --password-stdin ${DOCKERHUBUSER_PSW}"
+				sh "docker push ${registry}"
 			}
 		}
 	}
