@@ -9,7 +9,7 @@ pipeline {
 	stages {     
      	stage('Checking environment') {
 			steps {
-				sh 'echo "Checking environment..."'
+				echo "Checking environment..."
 				sh 'git --version'
 				echo "Branch: ${env.BRANCH_NAME}"
 				sh 'docker -v'
@@ -18,14 +18,14 @@ pipeline {
 
 		stage("Linting") {
 			steps { 
-				echo 'Linting...'
+				echo "Linting..."
       			sh '/bin/hadolint Dockerfile'
 			}
 		}
 
 		stage("Building Docker Image & Upload to Docker Hub") {
 			steps {
-				sh 'echo "Building Image..."'
+				echo "Building Image..."
 				sh "docker build -t ${registry} ."
 				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
 				sh "docker push ${registry}"
