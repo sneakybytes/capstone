@@ -38,9 +38,12 @@ pipeline {
 				sh "sh k8s_cluster.sh"
 			}
 		}
-		stage("Testing WebApp") {
+		stage("Testing & Clean-up") {
 			steps {
+				echo "Testing..."
 				sh "curl http://127.0.0.1:31010"
+				echo "Cleaning up..."
+				sh "docker system prune -f"
 			}
 		}
 	}
