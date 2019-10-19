@@ -23,17 +23,18 @@ pipeline {
 			}
 		}
 
-		stage("Building Docker Image & Upload to Docker Hub") {
+		stage("Building Image") {
 			steps {
 				echo "Building Image..."
 				sh "docker build -t ${registry} ."
 				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
+				echo "Uploading to Docker registry"
 				sh "docker push ${registry}"
 			}
 		}
-		stage("Deploying on Kubernetes Cluser") {
+		stage("Deploy") {
 			steps {
-				echo "Creating Kubernetes cluster..."
+				echo "Deploy WebApp to Kubernetes..."
 				sh "sh k8s_cluster.sh"
 			}
 		}
