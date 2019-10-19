@@ -39,7 +39,7 @@ pipeline {
 		}
 		stage("Testing WebApp") {
 			steps {
-				curl http://127.0.0.1:31010
+				sh "curl http://127.0.0.1:31010"
 			}
 		}
 	}
