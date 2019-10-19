@@ -15,7 +15,8 @@ spec:
         app: webapp
     spec:
       containers:
-      - image: sneakybytes/capstone-httpd
+      - image: sneakybytes/capstone-httpd:latest
         name: webapp
         ports:
         - containerPort: 80
+          protocol: TCP

@@ -6,10 +6,10 @@ metadata:
   name: capstone-service
 spec:
   ports:
-  - nodePort: 30500
+  - nodePort: 31010
     port: 80
     protocol: TCP
     targetPort: 80
   selector:
-    app: web
+    app: webapp
   type: NodePort
