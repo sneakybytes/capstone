@@ -37,5 +37,10 @@ pipeline {
 				sh "sh k8s_cluster.sh"
 			}
 		}
+		stage("Testing WebApp") {
+			steps {
+				curl 127.0.0.1:31010
+			}
+		}
 	}
 }
