@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - image: sneakybytes/capstone-httpd:latest
+        tty: true
         name: webapp
         ports:
         - containerPort: 80
