@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: webapp
+  name: capstone-service
+spec:
+  ports:
+  - nodePort: 31010
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: webapp
+  type: LoadBalancer

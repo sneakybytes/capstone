@@ -1,20 +1,50 @@
 pipeline {
-     	agent any
+    agent any
+
+	environment {
+	    DOCKERHUBUSER = credentials('dockerid')
+		registry = 'sneakybytes/capstone-httpd'
+	}
+	
 	stages {     
-     		stage('Checking environment') {
+     	stage('Checking environment') {
 			steps {
-      				sh 'echo "Checking environment..."'
-      				sh 'git --version'
-      				echo "Branch: ${env.BRANCH_NAME}"
-      				sh 'docker -v'
+				echo "Checking environment..."
+				sh 'git --version'
+				echo "Branch: ${env.BRANCH_NAME}"
+				sh 'docker -v'
 			}
-	    	}
+		}
+
 		stage("Linting") {
 			steps { 
-				echo 'Linting...'
-      				sh '/bin/hadolint Dockerfile'
+				echo "Linting..."
+      			sh '/bin/hadolint Dockerfile'
+			}
+		}
+
+		stage("Building Image") {
+			steps {
+				echo "Building Image..."
+				sh "docker build -t ${registry} ."
+				sh "docker login -u ${DOCKERHUBUSER_USR} -p ${DOCKERHUBUSER_PSW}"
+				echo "Uploading to Docker registry"
+				sh "docker push ${registry}"
+			}
+		}
+		stage("Deploy") {
+			steps {
+				echo "Deploy WebApp to Kubernetes..."
+				sh "sh k8s_cluster.sh"
+			}
+		}
+		stage("Testing & Clean-up") {
+			steps {
+				echo "Testing..."
+				sh "curl http://127.0.0.1:31010"
+				echo "Cleaning up..."
+				sh "docker system prune -f"
 			}
 		}
 	}
-     
 }
